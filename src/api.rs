@@ -200,6 +200,9 @@ pub trait ElectrumApi {
     /// Returns the merkle path for the transaction `txid` confirmed in the block at `height`.
     fn transaction_get_merkle(&self, txid: &Txid, height: usize) -> Result<GetMerkleRes, Error>;
 
+    /// Returns all the silent payment tweaks from `height`
+    fn sp_tweaks(&self, height: usize) -> Result<Vec<String>, Error>;
+
     /// Returns the capabilities of the server.
     fn server_features(&self) -> Result<ServerFeaturesRes, Error>;
 

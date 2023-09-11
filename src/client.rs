@@ -329,6 +329,11 @@ impl ElectrumApi for Client {
     }
 
     #[inline]
+    fn sp_tweaks(&self, height: usize) -> Result<Vec<String>, Error> {
+        impl_inner_call!(self, sp_tweaks, height)
+    }
+
+    #[inline]
     fn server_features(&self) -> Result<ServerFeaturesRes, Error> {
         impl_inner_call!(self, server_features)
     }

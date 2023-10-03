@@ -1,6 +1,6 @@
 //! Electrum Client
 
-use std::{borrow::Borrow, sync::RwLock};
+use std::{borrow::Borrow, sync::RwLock, collections::HashMap};
 
 use log::{info, warn};
 
@@ -329,8 +329,13 @@ impl ElectrumApi for Client {
     }
 
     #[inline]
-    fn sp_tweaks(&self, height: usize) -> Result<Vec<String>, Error> {
+    fn sp_tweaks(&self, height: usize) -> Result<HashMap<u32, Vec<String>>, Error> {
         impl_inner_call!(self, sp_tweaks, height)
+    }
+
+    #[inline]
+    fn sp_tweaks_single_block(&self, height: usize) -> Result<Vec<String>, Error> {
+        impl_inner_call!(self, sp_tweaks_single_block, height)
     }
 
     #[inline]

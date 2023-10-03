@@ -1047,10 +1047,21 @@ impl<T: Read + Write> ElectrumApi for RawClient<T> {
         Ok(serde_json::from_value(result)?)
     }
 
-    fn sp_tweaks(&self, height: usize) -> Result<Vec<String>, Error> {
+    fn sp_tweaks(&self, height: usize) -> Result<HashMap<u32, Vec<String>>, Error> {
         let req = Request::new_id(
             self.last_id.fetch_add(1, Ordering::SeqCst),
             "blockchain.block.tweaks",
+            vec![Param::Usize(height)],
+        );
+        let result = self.call(req)?;
+
+        Ok(serde_json::from_value(result)?)
+    }
+
+    fn sp_tweaks_single_block(&self, height: usize) -> Result<Vec<String>, Error> {
+        let req = Request::new_id(
+            self.last_id.fetch_add(1, Ordering::SeqCst),
+            "blockchain.block.tweakssingleblock",
             vec![Param::Usize(height)],
         );
         let result = self.call(req)?;

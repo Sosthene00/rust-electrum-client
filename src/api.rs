@@ -1,6 +1,7 @@
 //! Electrum APIs
 
 use std::borrow::Borrow;
+use std::collections::HashMap;
 use std::convert::TryInto;
 
 use bitcoin::consensus::encode::{deserialize, serialize};
@@ -201,7 +202,10 @@ pub trait ElectrumApi {
     fn transaction_get_merkle(&self, txid: &Txid, height: usize) -> Result<GetMerkleRes, Error>;
 
     /// Returns all the silent payment tweaks from `height`
-    fn sp_tweaks(&self, height: usize) -> Result<Vec<String>, Error>;
+    fn sp_tweaks(&self, height: usize) -> Result<HashMap<u32,Vec<String>>, Error>;
+
+    /// Returns all the silent payment tweaks from `height` for a signle block
+    fn sp_tweaks_single_block(&self, height: usize) -> Result<Vec<String>, Error>;
 
     /// Returns the capabilities of the server.
     fn server_features(&self) -> Result<ServerFeaturesRes, Error>;
